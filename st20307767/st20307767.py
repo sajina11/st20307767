@@ -15,3 +15,12 @@ air_quality_data_set_file_paths = [
 data_set_frames = [pd.read_csv(file) for file in air_quality_data_set_file_paths]
 df = pd.concat(data_set_frames)
 
+
+# Step 2: Get an overview of the data
+print("How much number of row and colum is there in dataset:", df.shape)
+print("\nAs well as how much Data Types and Non-null Counts in dataset:")
+
+
+#step 3:Find the rows number of the dataset
+df.info()
+print("\nFirst Few Rows of the Dataset:")
