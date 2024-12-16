@@ -29,3 +29,29 @@ data_paths = [
 
  ]
 
+# Read and merge datasets
+def load_and_merge_data(paths):
+    dfs = []
+    for path in paths:
+        df = pd.read_csv(path)
+        df['Station'] = path.split("\\")[-1].split("_")[2]  # Extract station name from filename
+        dfs.append(df)
+    merged_data = pd.concat(dfs, ignore_index=True)
+    
+    # EDA Preprocessing steps
+    # 1. Handle missing values
+    merged_data.fillna(method='ffill', inplace=True)  # Forward fill missing values
+    
+    # 2. Remove duplicate entries
+    merged_data.drop_duplicates(inplace=True)
+    
+    # 3. Feature engineering (example: create a new 'Month' column from the 'year' column)
+    merged_data['year'] = pd.to_datetime(merged_data['year'], errors='coerce')
+    merged_data['Month'] = merged_data['year'].dt.month  # Extract month from 'year' as a new feature
+    
+    # Drop rows where 'year' is NaT after conversion
+    merged_data.dropna(subset=['year'], inplace=True)
+    
+    return merged_data
+
+
