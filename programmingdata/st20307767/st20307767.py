@@ -26,8 +26,7 @@ def data_handling(data_handling):
     data_handling_part_system.fillna(method='ffill', inplace=True)  # Forward fill missing values
 
     # Remove duplicate entries
-    data_handling_part_system.drop_duplicates(inplace=True)
-
+  
     # Feature engineering (e.g., create 'Month' from 'year')
     if 'year' in data_handling_part_system.columns:
         data_handling_part_system['year'] = pd.to_datetime(data_handling_part_system['year'], errors='coerce')
